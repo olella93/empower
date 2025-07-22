@@ -27,18 +27,18 @@ import {
   Refresh as RefreshIcon,
 } from '@mui/icons-material';
 import type { RootState } from '../store';
-import { updateQuantity, removeFromCart, clearCart } from '../store/slices/cartSlice';
+import { updateCartItem, removeFromCart, clearCart } from '../store/slices/cartSlice';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items, total, loading, error } = useSelector((state: RootState) => state.cart);
 
-  const handleUpdateQuantity = (productId: number, quantity: number) => {
+  const handleUpdateQuantity = (cartItemId: number, quantity: number) => {
     if (quantity > 0) {
-      dispatch(updateQuantity({ productId, quantity }) as any);
+      dispatch(updateCartItem({ cart_item_id: cartItemId, quantity }) as any);
     } else {
-      dispatch(removeFromCart(productId) as any);
+      dispatch(removeFromCart(cartItemId) as any);
     }
   };
 

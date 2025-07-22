@@ -30,7 +30,7 @@ import {
 } from '@mui/material';
 import {
   FilterList as FilterIcon,
-  ViewGrid as GridViewIcon,
+  GridView as GridViewIcon,
   ViewList as ListViewIcon,
   ShoppingCart as CartIcon,
   FavoriteBorder as FavoriteIcon,
@@ -43,7 +43,7 @@ import { addToCart } from '../store/slices/cartSlice';
 
 const Shop: React.FC = () => {
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector((state: RootState) => state.products);
+  const { products, isLoading, error } = useSelector((state: RootState) => state.products);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -69,7 +69,7 @@ const Shop: React.FC = () => {
   const colors = ['Black', 'White', 'Red', 'Blue', 'Green', 'Pink', 'Gray', 'Brown'];
 
   useEffect(() => {
-    dispatch(fetchProducts() as any);
+    dispatch(fetchProducts({}) as any);
   }, [dispatch]);
 
   // Filter and sort products
@@ -102,7 +102,7 @@ const Shop: React.FC = () => {
   );
 
   const handleAddToCart = (productId: number) => {
-    dispatch(addToCart({ productId, quantity: 1 }) as any);
+    dispatch(addToCart({ product_id: productId, quantity: 1 }) as any);
   };
 
   const handleSizeChange = (size: string) => {
@@ -298,7 +298,7 @@ const Shop: React.FC = () => {
     </Card>
   );
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Typography variant="h6" textAlign="center">

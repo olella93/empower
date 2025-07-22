@@ -40,7 +40,7 @@ import {
   Print,
 } from '@mui/icons-material';
 import type { RootState } from '../store';
-import { fetchUserOrders } from '../store/slices/orderSlice';
+import { fetchOrders } from '../store/slices/orderSlice';
 
 interface Order {
   id: number;
@@ -209,7 +209,7 @@ const Orders: React.FC = () => {
       return;
     }
     
-    dispatch(fetchUserOrders(user.id) as any);
+    dispatch(fetchOrders() as any);
   }, [dispatch, user, navigate]);
 
   const getStatusColor = (status: string) => {

@@ -5,6 +5,11 @@ export interface User {
   first_name: string;
   last_name: string;
   phone?: string;
+  date_of_birth?: string;
+  gender?: string;
+  address?: string;
+  city?: string;
+  postal_code?: string;
   is_admin: boolean;
   is_active: boolean;
   created_at: string;
