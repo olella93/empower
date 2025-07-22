@@ -37,9 +37,20 @@ const Footer: React.FC = () => {
         <Grid container spacing={4}>
           {/* Company Info */}
           <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h5" gutterBottom fontWeight="bold">
-              EMPOWER
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <img
+                src="/logo.png"
+                alt="Empower Logo"
+                style={{
+                  height: '40px',
+                  marginRight: '12px',
+                  filter: 'brightness(0) invert(1)', // Make logo white
+                }}
+              />
+              <Typography variant="h5" fontWeight="bold">
+                EMPOWER
+              </Typography>
+            </Box>
             <Typography variant="body2" sx={{ mb: 2, opacity: 0.9 }}>
               Elevating your style with premium fashion collections. 
               Discover the latest trends and timeless pieces at Kenya's 

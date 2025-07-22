@@ -14,7 +14,6 @@ import {
   IconButton,
   FormControlLabel,
   Checkbox,
-  Grid,
   Select,
   MenuItem,
   FormControl,
@@ -63,18 +62,33 @@ const Register: React.FC = () => {
     }
   }, [user, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
-    const { name, value, checked } = e.target as HTMLInputElement;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name!]: name === 'agreeToTerms' || name === 'agreeToMarketing' ? checked : value,
+      [name]: name === 'agreeToTerms' || name === 'agreeToMarketing' ? checked : value,
     }));
     
     // Clear validation error when user starts typing
-    if (validationErrors[name!]) {
+    if (validationErrors[name]) {
       setValidationErrors(prev => ({
         ...prev,
-        [name!]: '',
+        [name]: '',
+      }));
+    }
+  };
+
+  const handleSelectChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+    
+    if (validationErrors[name]) {
+      setValidationErrors(prev => ({
+        ...prev,
+        [name]: '',
       }));
     }
   };
@@ -108,10 +122,6 @@ const Register: React.FC = () => {
       errors.confirmPassword = 'Passwords do not match';
     }
     
-    if (formData.phone && !/^\+?[\d\s-()]+$/.test(formData.phone)) {
-      errors.phone = 'Invalid phone number format';
-    }
-    
     if (!formData.agreeToTerms) {
       errors.agreeToTerms = 'You must agree to the terms and conditions';
     }
@@ -133,7 +143,7 @@ const Register: React.FC = () => {
         password: formData.password,
         first_name: formData.firstName,
         last_name: formData.lastName,
-        phone: formData.phone,
+        phone: formData.phone || undefined,
         date_of_birth: formData.dateOfBirth || undefined,
         gender: formData.gender || undefined,
       }) as any).unwrap();
@@ -154,7 +164,7 @@ const Register: React.FC = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: 'linear-gradient(135deg, #083529 0%, #10B981 100%)',
         display: 'flex',
         alignItems: 'center',
         py: 4,
@@ -172,12 +182,19 @@ const Register: React.FC = () => {
         >
           {/* Header */}
           <Box textAlign="center" mb={4}>
-            <PersonAdd sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
+            <img
+              src="/logo.png"
+              alt="Empower Logo"
+              style={{
+                height: '80px',
+                marginBottom: '16px',
+              }}
+            />
             <Typography variant="h4" component="h1" gutterBottom color="primary">
-              Create Your Account
+              Join Empower
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Join Empower and start your fashion journey
+              Create your account and start your fashion journey
             </Typography>
           </Box>
 
@@ -189,297 +206,279 @@ const Register: React.FC = () => {
               </Alert>
             )}
 
-            <Grid container spacing={3}>
-              {/* Personal Information */}
-              <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom color="primary">
-                  Personal Information
-                </Typography>
-              </Grid>
-              
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="First Name"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  error={!!validationErrors.firstName}
-                  helperText={validationErrors.firstName}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Person color="primary" />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
+            {/* Personal Information */}
+            <Typography variant="h6" gutterBottom color="primary" sx={{ mb: 3 }}>
+              Personal Information
+            </Typography>
+            
+            <Box sx={{ display: 'flex', gap: 2, mb: 3, flexDirection: { xs: 'column', sm: 'row' } }}>
+              <TextField
+                fullWidth
+                label="First Name"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                error={!!validationErrors.firstName}
+                helperText={validationErrors.firstName}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Person color="primary" />
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Last Name"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  error={!!validationErrors.lastName}
-                  helperText={validationErrors.lastName}
-                />
-              </Grid>
+              <TextField
+                fullWidth
+                label="Last Name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                error={!!validationErrors.lastName}
+                helperText={validationErrors.lastName}
+              />
+            </Box>
 
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Email Address"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  error={!!validationErrors.email}
-                  helperText={validationErrors.email}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Email color="primary" />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
+            <Box sx={{ display: 'flex', gap: 2, mb: 3, flexDirection: { xs: 'column', sm: 'row' } }}>
+              <TextField
+                fullWidth
+                label="Email Address"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                error={!!validationErrors.email}
+                helperText={validationErrors.email}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Email color="primary" />
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Phone Number"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  error={!!validationErrors.phone}
-                  helperText={validationErrors.phone}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Phone color="primary" />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
+              <TextField
+                fullWidth
+                label="Phone Number"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                error={!!validationErrors.phone}
+                helperText={validationErrors.phone}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Phone color="primary" />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
 
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Date of Birth"
-                  name="dateOfBirth"
-                  type="date"
-                  value={formData.dateOfBirth}
-                  onChange={handleChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
+            <Box sx={{ display: 'flex', gap: 2, mb: 3, flexDirection: { xs: 'column', sm: 'row' } }}>
+              <TextField
+                fullWidth
+                label="Date of Birth"
+                name="dateOfBirth"
+                type="date"
+                value={formData.dateOfBirth}
+                onChange={handleChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
 
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <InputLabel>Gender</InputLabel>
-                  <Select
-                    name="gender"
-                    value={formData.gender}
-                    label="Gender"
+              <FormControl fullWidth>
+                <InputLabel>Gender</InputLabel>
+                <Select
+                  name="gender"
+                  value={formData.gender}
+                  label="Gender"
+                  onChange={handleSelectChange}
+                >
+                  <MenuItem value="">Prefer not to say</MenuItem>
+                  <MenuItem value="male">Male</MenuItem>
+                  <MenuItem value="female">Female</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+
+            {/* Account Security */}
+            <Typography variant="h6" gutterBottom color="primary" sx={{ mt: 4, mb: 3 }}>
+              Account Security
+            </Typography>
+
+            <Box sx={{ display: 'flex', gap: 2, mb: 3, flexDirection: { xs: 'column', sm: 'row' } }}>
+              <TextField
+                fullWidth
+                label="Password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={handleChange}
+                error={!!validationErrors.password}
+                helperText={validationErrors.password}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock color="primary" />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <TextField
+                fullWidth
+                label="Confirm Password"
+                name="confirmPassword"
+                type={showConfirmPassword ? 'text' : 'password'}
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                error={!!validationErrors.confirmPassword}
+                helperText={validationErrors.confirmPassword}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        edge="end"
+                      >
+                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+
+            {/* Terms and Conditions */}
+            <Box sx={{ mb: 3 }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="agreeToTerms"
+                    checked={formData.agreeToTerms}
                     onChange={handleChange}
-                  >
-                    <MenuItem value="">Prefer not to say</MenuItem>
-                    <MenuItem value="male">Male</MenuItem>
-                    <MenuItem value="female">Female</MenuItem>
-                    <MenuItem value="other">Other</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Account Security */}
-              <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom color="primary" sx={{ mt: 2 }}>
-                  Account Security
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={handleChange}
-                  error={!!validationErrors.password}
-                  helperText={validationErrors.password}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Lock color="primary" />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={() => setShowPassword(!showPassword)}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Confirm Password"
-                  name="confirmPassword"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  error={!!validationErrors.confirmPassword}
-                  helperText={validationErrors.confirmPassword}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          edge="end"
-                        >
-                          {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-
-              {/* Terms and Preferences */}
-              <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom color="primary" sx={{ mt: 2 }}>
-                  Preferences
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="agreeToTerms"
-                      checked={formData.agreeToTerms}
-                      onChange={handleChange}
-                      color="primary"
-                    />
-                  }
-                  label={
-                    <Typography variant="body2">
-                      I agree to the{' '}
-                      <Button component={Link} to="/terms" variant="text" size="small">
-                        Terms and Conditions
-                      </Button>{' '}
-                      and{' '}
-                      <Button component={Link} to="/privacy" variant="text" size="small">
-                        Privacy Policy
-                      </Button>
-                      *
-                    </Typography>
-                  }
-                />
-                {validationErrors.agreeToTerms && (
-                  <Typography variant="caption" color="error" display="block" sx={{ mt: 0.5 }}>
-                    {validationErrors.agreeToTerms}
-                  </Typography>
-                )}
-              </Grid>
-
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="agreeToMarketing"
-                      checked={formData.agreeToMarketing}
-                      onChange={handleChange}
-                      color="primary"
-                    />
-                  }
-                  label={
-                    <Typography variant="body2">
-                      I would like to receive marketing emails about new products and special offers
-                    </Typography>
-                  }
-                />
-              </Grid>
-
-              {/* Submit Button */}
-              <Grid item xs={12}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  size="large"
-                  disabled={isLoading}
-                  sx={{ mt: 2, py: 1.5 }}
-                >
-                  {isLoading ? 'Creating Account...' : 'Create Account'}
-                </Button>
-              </Grid>
-
-              {/* Social Registration */}
-              <Grid item xs={12}>
-                <Divider sx={{ my: 2 }}>
-                  <Typography variant="body2" color="text.secondary">
-                    Or register with
-                  </Typography>
-                </Divider>
-              </Grid>
-
-              <Grid item xs={6}>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  startIcon={<GoogleIcon />}
-                  onClick={() => handleSocialRegister('Google')}
-                  sx={{ py: 1.5 }}
-                >
-                  Google
-                </Button>
-              </Grid>
-
-              <Grid item xs={6}>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  startIcon={<FacebookIcon />}
-                  onClick={() => handleSocialRegister('Facebook')}
-                  sx={{ py: 1.5 }}
-                >
-                  Facebook
-                </Button>
-              </Grid>
-
-              {/* Sign In Link */}
-              <Grid item xs={12}>
-                <Box textAlign="center" mt={2}>
-                  <Typography variant="body2" color="text.secondary">
-                    Already have an account?{' '}
+                    color="primary"
+                  />
+                }
+                label={
+                  <Typography variant="body2">
+                    I agree to the{' '}
                     <Button
                       component={Link}
-                      to="/login"
+                      to="/terms"
                       variant="text"
-                      sx={{ textTransform: 'none', p: 0 }}
+                      size="small"
+                      sx={{ textTransform: 'none', p: 0, minWidth: 'auto' }}
                     >
-                      Sign in here
+                      Terms of Service
+                    </Button>{' '}
+                    and{' '}
+                    <Button
+                      component={Link}
+                      to="/privacy"
+                      variant="text"
+                      size="small"
+                      sx={{ textTransform: 'none', p: 0, minWidth: 'auto' }}
+                    >
+                      Privacy Policy
                     </Button>
+                    {' *'}
                   </Typography>
-                </Box>
-              </Grid>
-            </Grid>
+                }
+              />
+              {validationErrors.agreeToTerms && (
+                <Typography variant="caption" color="error" display="block" sx={{ mt: 1 }}>
+                  {validationErrors.agreeToTerms}
+                </Typography>
+              )}
+            </Box>
+
+            <Box sx={{ mb: 3 }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="agreeToMarketing"
+                    checked={formData.agreeToMarketing}
+                    onChange={handleChange}
+                    color="primary"
+                  />
+                }
+                label={
+                  <Typography variant="body2">
+                    I would like to receive marketing emails about new products and special offers
+                  </Typography>
+                }
+              />
+            </Box>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              size="large"
+              disabled={isLoading}
+              sx={{ mb: 3, py: 1.5 }}
+            >
+              {isLoading ? 'Creating Account...' : 'Create Account'}
+            </Button>
+
+            <Divider sx={{ mb: 3 }}>
+              <Typography variant="body2" color="text.secondary">
+                Or sign up with
+              </Typography>
+            </Divider>
+
+            {/* Social Registration Buttons */}
+            <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+              <Button
+                fullWidth
+                variant="outlined"
+                startIcon={<GoogleIcon />}
+                onClick={() => handleSocialRegister('Google')}
+                sx={{ py: 1.5 }}
+              >
+                Google
+              </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                startIcon={<FacebookIcon />}
+                onClick={() => handleSocialRegister('Facebook')}
+                sx={{ py: 1.5 }}
+              >
+                Facebook
+              </Button>
+            </Box>
+
+            {/* Sign In Link */}
+            <Box textAlign="center">
+              <Typography variant="body2" color="text.secondary">
+                Already have an account?{' '}
+                <Button
+                  component={Link}
+                  to="/login"
+                  variant="text"
+                  sx={{ textTransform: 'none', p: 0 }}
+                >
+                  Sign in here
+                </Button>
+              </Typography>
+            </Box>
           </Box>
         </Paper>
       </Container>

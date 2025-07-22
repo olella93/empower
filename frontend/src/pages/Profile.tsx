@@ -163,7 +163,7 @@ const Profile: React.FC = () => {
     <Box sx={{ py: 4 }}>
       <Container maxWidth="lg">
         {/* Header */}
-        <Paper sx={{ p: 4, mb: 4, background: 'linear-gradient(135deg, #2C3E50 0%, #34495E 100%)', color: 'white' }}>
+        <Paper sx={{ p: 4, mb: 4, background: 'linear-gradient(135deg, #083529 0%, #064E3B 100%)', color: 'white' }}>
           <Grid container spacing={3} alignItems="center">
             <Grid item>
               <Avatar

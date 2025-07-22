@@ -14,7 +14,6 @@ import {
   IconButton,
   FormControlLabel,
   Checkbox,
-  Grid,
 } from '@mui/material';
 import {
   Visibility,
@@ -116,7 +115,7 @@ const Login: React.FC = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: 'linear-gradient(135deg, #083529 0%, #10B981 100%)',
         display: 'flex',
         alignItems: 'center',
         py: 4,
@@ -134,7 +133,14 @@ const Login: React.FC = () => {
         >
           {/* Header */}
           <Box textAlign="center" mb={4}>
-            <Person sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
+            <img
+              src="/logo.png"
+              alt="Empower Logo"
+              style={{
+                height: '80px',
+                marginBottom: '16px',
+              }}
+            />
             <Typography variant="h4" component="h1" gutterBottom color="primary">
               Welcome Back
             </Typography>
@@ -240,30 +246,26 @@ const Login: React.FC = () => {
             </Divider>
 
             {/* Social Login Buttons */}
-            <Grid container spacing={2} sx={{ mb: 3 }}>
-              <Grid item xs={6}>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  startIcon={<GoogleIcon />}
-                  onClick={() => handleSocialLogin('Google')}
-                  sx={{ py: 1.5 }}
-                >
-                  Google
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  startIcon={<FacebookIcon />}
-                  onClick={() => handleSocialLogin('Facebook')}
-                  sx={{ py: 1.5 }}
-                >
-                  Facebook
-                </Button>
-              </Grid>
-            </Grid>
+            <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+              <Button
+                fullWidth
+                variant="outlined"
+                startIcon={<GoogleIcon />}
+                onClick={() => handleSocialLogin('Google')}
+                sx={{ py: 1.5 }}
+              >
+                Google
+              </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                startIcon={<FacebookIcon />}
+                onClick={() => handleSocialLogin('Facebook')}
+                sx={{ py: 1.5 }}
+              >
+                Facebook
+              </Button>
+            </Box>
 
             {/* Sign Up Link */}
             <Box textAlign="center">

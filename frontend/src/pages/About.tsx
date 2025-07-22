@@ -79,7 +79,7 @@ const About: React.FC = () => {
       {/* Hero Section */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #2C3E50 0%, #34495E 100%)',
+          background: 'linear-gradient(135deg, #083529 0%, #064E3B 100%)',
           color: 'white',
           py: 8,
           mb: 6,
@@ -88,6 +88,16 @@ const About: React.FC = () => {
         <Container maxWidth="lg">
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={6}>
+              <Box sx={{ mb: 3 }}>
+                <img
+                  src="/logo.png"
+                  alt="Empower Logo"
+                  style={{
+                    height: '80px',
+                    marginBottom: '24px',
+                  }}
+                />
+              </Box>
               <Typography variant="h2" component="h1" gutterBottom>
                 About Empower
               </Typography>
@@ -215,7 +225,7 @@ const About: React.FC = () => {
                 sx={{
                   p: 4,
                   textAlign: 'center',
-                  background: 'linear-gradient(135deg, #E74C3C 0%, #C0392B 100%)',
+                  background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
                   color: 'white',
                 }}
               >

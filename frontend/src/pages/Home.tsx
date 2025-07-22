@@ -111,7 +111,7 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <Box
         sx={{
-          backgroundImage: 'linear-gradient(45deg, rgba(44, 62, 80, 0.8), rgba(231, 76, 60, 0.8)), url(https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=800&fit=crop)',
+          backgroundImage: 'linear-gradient(45deg, rgba(8, 53, 41, 0.9), rgba(5, 150, 105, 0.8)), url(https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=800&fit=crop)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           color: 'white',

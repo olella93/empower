@@ -22,6 +22,8 @@ export interface RegisterData {
   first_name: string;
   last_name: string;
   phone?: string;
+  date_of_birth?: string;
+  gender?: string;
 }
 
 // Product types

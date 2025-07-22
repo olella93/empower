@@ -98,7 +98,7 @@ const Contact: React.FC = () => {
       {/* Hero Section */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #2C3E50 0%, #34495E 100%)',
+          background: 'linear-gradient(135deg, #083529 0%, #064E3B 100%)',
           color: 'white',
           py: 8,
           mb: 6,

@@ -67,20 +67,39 @@ const Navbar: React.FC = () => {
   const renderDesktopNav = () => (
     <>
       {/* Logo */}
-      <Typography
-        variant="h4"
+      {/* Brand/Logo */}
+      <Box
         component={Link}
         to="/"
         sx={{
-          flexGrow: 1,
+          display: 'flex',
+          alignItems: 'center',
           textDecoration: 'none',
           color: 'inherit',
-          fontWeight: 'bold',
-          fontFamily: '"Poppins", sans-serif',
+          flexGrow: 1,
         }}
       >
-        EMPOWER
-      </Typography>
+        <img
+          src="/logo.png"
+          alt="Empower"
+          style={{
+            height: '40px',
+            marginRight: '12px',
+          }}
+        />
+        <Typography
+          variant="h4"
+          component="div"
+          sx={{
+            color: 'inherit',
+            fontWeight: 'bold',
+            fontFamily: '"Poppins", sans-serif',
+            display: { xs: 'none', sm: 'block' },
+          }}
+        >
+          EMPOWER
+        </Typography>
+      </Box>
 
       {/* Navigation Links */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>

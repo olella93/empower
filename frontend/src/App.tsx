@@ -27,17 +27,23 @@ import './App.css';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#2C3E50',
-      light: '#34495E',
-      dark: '#1A252F',
+      main: '#083529', // Main emerald logo color
+      light: '#10B981', // Lighter emerald
+      dark: '#064E3B', // Darker emerald
     },
     secondary: {
-      main: '#E74C3C',
-      light: '#EC7063',
-      dark: '#C0392B',
+      main: '#059669', // Emerald accent
+      light: '#34D399', // Light emerald
+      dark: '#047857', // Dark emerald accent
+    },
+    success: {
+      main: '#10B981',
+      light: '#6EE7B7',
+      dark: '#059669',
     },
     background: {
-      default: '#FAFAFA',
+      default: '#F0FDF4', // Very light emerald tint
+      paper: '#FFFFFF',
     },
   },
   typography: {
